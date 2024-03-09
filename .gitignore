@@ -7,3 +7,5 @@ dist/
 *.iml
 
 npm-debug.log*
+
+.env

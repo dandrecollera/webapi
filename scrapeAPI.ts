@@ -2,12 +2,15 @@ import mysql, { createPool } from 'mysql';
 import axios from 'axios';
 import { json } from 'stream/consumers';
 import { table } from 'console';
+import { config } from 'dotenv';
+
+config();
 
 const pool = createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'modeldb'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 });
 
 function tableExists(tableName: string): Promise<boolean> {
@@ -163,8 +166,8 @@ const modelListAPI = {
     },
     headers: {
         'content-type': 'application/json',
-        'X-RapidAPI-Key': 'a11f534ac2msh3775cd101784815p12c55bjsn8638ddbe7e66',
-        'X-RapidAPI-Host': 'fans-atlas.p.rapidapi.com'
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+        'X-RapidAPI-Host': process.env.RAPIDAPI_HOST,
     },
     data: {}
 };
@@ -173,8 +176,8 @@ const categoryListAPI = {
     method: 'GET',
     url: 'https://fans-atlas.p.rapidapi.com/api/v1/categories/list',
     headers: {
-        'X-RapidAPI-Key': 'a11f534ac2msh3775cd101784815p12c55bjsn8638ddbe7e66',
-        'X-RapidAPI-Host': 'fans-atlas.p.rapidapi.com'
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+        'X-RapidAPI-Host': process.env.RAPIDAPI_HOST,
     }
 }
 
@@ -183,8 +186,8 @@ const modelInfoAPI = {
     url: 'https://fans-atlas.p.rapidapi.com/api/v1/models/one',
     params: {},
     headers: {
-        'X-RapidAPI-Key': 'a11f534ac2msh3775cd101784815p12c55bjsn8638ddbe7e66',
-        'X-RapidAPI-Host': 'fans-atlas.p.rapidapi.com'
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+        'X-RapidAPI-Host': process.env.RAPIDAPI_HOST,
     }
 };
 
@@ -193,8 +196,8 @@ const modelCountAPI = {
     url: 'https://fans-atlas.p.rapidapi.com/api/v1/models/count',
     headers: {
         'content-type': 'application/json',
-        'X-RapidAPI-Key': 'a11f534ac2msh3775cd101784815p12c55bjsn8638ddbe7e66',
-        'X-RapidAPI-Host': 'fans-atlas.p.rapidapi.com'
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+        'X-RapidAPI-Host': process.env.RAPIDAPI_HOST,
     },
     data: {
         categories: ['free']
