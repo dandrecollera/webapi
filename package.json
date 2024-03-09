@@ -1,0 +1,33 @@
+{
+  "name": "webapi",
+  "version": "1.0.0",
+  "description": "Web Scraping API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dandrecollera/webapi.git"
+  },
+  "keywords": [
+    "webscrape"
+  ],
+  "author": "Dandre Collera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dandrecollera/webapi/issues"
+  },
+  "homepage": "https://github.com/dandrecollera/webapi#readme",
+  "devDependencies": {
+    "@types/mysql": "^2.15.25",
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^1.6.7",
+    "mysql": "^2.18.1"
+  }
+}
