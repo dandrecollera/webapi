@@ -61,7 +61,6 @@ async function createTableIfNotExists(tableName: string) {
             ) ENGINE=InnoDB`;
         }
 
-
         pool.query(query, (error, results) => {
             if (error) {
                 console.error('Error Creating Table: ', error);

@@ -59,9 +59,8 @@ async function insertModelCategories() {
             } else {
                 results.forEach(element => {
                     const modelId = element.id;
-                    const categories = JSON.parse(element.categories); // Parse the stringified JSON
+                    const categories = JSON.parse(element.categories);
                     console.log(modelId, categories);
-                    // Now you can use modelId and categories as needed
                     insertProcess(modelId, categories);
                 });
             }
@@ -81,7 +80,6 @@ async function insertProcess(modelId: number, categories: any) {
                 } else {
                     if (results.length > 0) {
                         const categoryId = results[0].id;
-                        // Check if the combination of modelId and categoryId already exists
                         const checkExistenceQuery = 'SELECT COUNT(*) AS count FROM modelcategories WHERE modelId = ? AND categoryId = ?';
                         pool.query(checkExistenceQuery, [modelId, categoryId], (error, results) => {
                             if (error) {
@@ -89,7 +87,6 @@ async function insertProcess(modelId: number, categories: any) {
                             } else {
                                 const count = results[0].count;
                                 if (count === 0) {
-                                    // If the combination doesn't exist, insert it
                                     const insertModelCategory = 'INSERT INTO modelcategories (modelId, categoryId) VALUES (?, ?)';
                                     pool.query(insertModelCategory, [modelId, categoryId], (error, results) => {
                                         if (error) {
@@ -113,5 +110,5 @@ async function insertProcess(modelId: number, categories: any) {
         console.error('Error Inserting Model Categories: ', error);
     }
 }
-// createTableIfNotExists('modelcategories');
+
 insertModelCategories();
