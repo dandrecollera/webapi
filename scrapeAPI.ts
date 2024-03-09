@@ -51,14 +51,14 @@ async function createTableIfNotExists(tableName: string) {
                 reddit TEXT,
                 youtube TEXT,
                 location TEXT
-            )`;
+            ) ENGINE=InnoDB`;
         }
 
         if (tableName == 'categories') {
             query = `CREATE TABLE ${tableName} (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255)
-            )`;
+            ) ENGINE=InnoDB`;
         }
 
 
