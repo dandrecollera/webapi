@@ -9,3 +9,5 @@ dist/
 npm-debug.log*
 
 .env
+
+data.json

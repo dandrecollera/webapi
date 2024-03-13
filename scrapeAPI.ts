@@ -3,6 +3,7 @@ import axios from 'axios';
 import { json } from 'stream/consumers';
 import { table } from 'console';
 import { config } from 'dotenv';
+import fs from 'fs';
 
 config();
 
@@ -11,6 +12,7 @@ const pool = createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
+    charset: 'utf8mb4',
 });
 
 function tableExists(tableName: string): Promise<boolean> {
@@ -33,7 +35,7 @@ async function createTableIfNotExists(tableName: string) {
         if (tableName == 'models') {
             query = `CREATE TABLE ${tableName} (
                 id INT PRIMARY KEY,
-                name VARCHAR(255),
+                name TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
                 username VARCHAR(255),
                 posts TEXT,
                 videos TEXT,
@@ -45,7 +47,7 @@ async function createTableIfNotExists(tableName: string) {
                 tiktok TEXT,
                 twitter TEXT,
                 pornhub TEXT,
-                description TEXT,
+                description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
                 price TEXT,
                 twitch TEXT,
                 reddit TEXT,
@@ -87,7 +89,7 @@ async function modelListSaveDB(data: any[]): Promise<void> {
                         console.log(`Record with username ${record.username} already exists, skipping...`);
                         resolve();
                     } else {
-                        const insertQuery = 'INSERT INTO models (id, name, username, posts, videos, likes, categories, price, twitch, reddit, youtube, location, url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+                        const insertQuery = 'INSERT INTO models (id, name, username, posts, videos, likes, categories, url, image, instagram, tiktok, twitter, pornhub, description, price, twitch, reddit, youtube, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
                         const values = [
                             record.id,
                             record.name,
@@ -96,12 +98,18 @@ async function modelListSaveDB(data: any[]): Promise<void> {
                             record.videos,
                             record.likes,
                             JSON.stringify(record.categories),
+                            record.url,
+                            record.image,
+                            record.instagram,
+                            record.tiktok,
+                            record.twitter,
+                            record.pornhub,
+                            record.description,
                             record.price,
                             record.twitch,
                             record.reddit,
                             record.youtube,
-                            record.location,
-                            record.url
+                            record.location
                         ];
                         pool.query(insertQuery, values, (insertError, insertResults) => {
                             if (insertError) {
@@ -210,6 +218,8 @@ async function fetchData() {
         const modelList = await axios.request(modelListAPI);
         const modelListJsonData = modelList.data;
         await modelListSaveDB(modelListJsonData);
+
+        fs.writeFileSync('data.json', JSON.stringify(modelListJsonData, null, 2))
 
         const categoryList = await axios.request(categoryListAPI);
         const categoryListJsonData = categoryList.data;
