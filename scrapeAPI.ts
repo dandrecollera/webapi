@@ -35,7 +35,7 @@ async function createTableIfNotExists(tableName: string) {
         if (tableName == 'models') {
             query = `CREATE TABLE ${tableName} (
                 id INT PRIMARY KEY,
-                name TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+                name TEXT,
                 username VARCHAR(255),
                 posts TEXT,
                 videos TEXT,
@@ -47,20 +47,20 @@ async function createTableIfNotExists(tableName: string) {
                 tiktok TEXT,
                 twitter TEXT,
                 pornhub TEXT,
-                description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+                description TEXT,
                 price TEXT,
                 twitch TEXT,
                 reddit TEXT,
                 youtube TEXT,
                 location TEXT
-            ) ENGINE=InnoDB`;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`;
         }
 
         if (tableName == 'categories') {
             query = `CREATE TABLE ${tableName} (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255)
-            ) ENGINE=InnoDB`;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`;
         }
 
         pool.query(query, (error, results) => {

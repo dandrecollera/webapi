@@ -37,7 +37,7 @@ async function createTableIfNotExists(tableName: string) {
             categoryid INT,
             FOREIGN KEY (modelid) REFERENCES models(id),
             FOREIGN KEY (categoryid) REFERENCES categories(id)
-        ) ENGINE=InnoDB`;
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`;
 
         pool.query(query, (error, results) => {
             if (error) {
